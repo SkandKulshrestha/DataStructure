@@ -1,7 +1,7 @@
 #include "queue.h"
 
 // see header file for description
-void vQueueInitialize(queue *ptQueue, int32_t i32Size)
+void vQueueInit(queue *ptQueue, int32_t i32Size)
 {
     // allocate the memory
     ptQueue->pi32Data = (int32_t *)malloc(i32Size * sizeof(int32_t));

@@ -27,7 +27,7 @@ typedef struct queue_s
  *  @param ptQueue      pointer to the queue
  *  @param i32Size      size of queue to be allocated
  */
-void vQueueInitialize(queue *ptQueue, int32_t i32Size);
+void vQueueInit(queue *ptQueue, int32_t i32Size);
 
 /**
  *  Push the data into the queue.
