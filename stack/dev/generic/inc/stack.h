@@ -2,9 +2,10 @@
 #define _STACK_H_
 
 #include <stdint.h>         // int32_t
-#include <stdio.h>          // printf
 #include <stdlib.h>         // malloc, free
 #include <stdbool.h>        // bool, true, false
+
+#include "config.h"
 
 /**
  *  Structure to hold the stack
@@ -12,28 +13,34 @@
 typedef struct stack_s
 {
     /// Maximum number of elements stack can hold
-    int32_t     i32MaxSize;
+    uint32_t        u32StackSize;
+
+    /// Size of each element
+    uint32_t        u32ElementSize;
+
     /// Top of the stack
-    int32_t     i32Top;
+    uint32_t        u32Top;
+
     /// Pointer to the array that holds elements
-    int32_t     *pi32Data;
-} stack;
+    void           *pvData;
+} STACK;
 
 /**
  *  Initialize the stack.
  *
- *  @param ptStack      pointer to the stack
- *  @param i32Size      size of stack to be allocated
+ *  @param ptStack          pointer to the stack
+ *  @param u32Size          size of stack to be allocated
+ *  @param u32ElementSize   size of element
  */
-void vStackInit(stack *ptStack, int32_t i32Size);
+void vStackInit(STACK *ptStack, uint32_t u32Size, uint32_t u32ElementSize);
 
 /**
  *  Push the data onto the stack.
  *
  *  @param ptStack      pointer to the stack
- *  @param i32Data      data to be pushed
+ *  @param tData        data to be pushed
  */
-void vStackPush(stack *ptStack, int32_t i32Data);
+void vStackPush(STACK *ptStack, void *pvData);
 
 /**
  *  Pop the data out from the stack.
@@ -42,7 +49,7 @@ void vStackPush(stack *ptStack, int32_t i32Data);
  *
  *  @return data popped from top of stack
  */
-int32_t i32StackPop(stack *ptStack);
+void vStackPop(STACK *ptStack, void *pvData);
 
 /**
  *  Check whether stack is empty or not.
@@ -52,7 +59,7 @@ int32_t i32StackPop(stack *ptStack);
  *  @return true, if stack is empty
  *          false, otherwise
  */
-bool bStackIsEmpty(stack *ptStack);
+bool bStackIsEmpty(STACK *ptStack);
 
 /**
  *  Check whether stack is full or not.
@@ -62,7 +69,7 @@ bool bStackIsEmpty(stack *ptStack);
  *  @return true, if stack is full
  *          false, otherwise
  */
-bool bStackIsFull(stack *ptStack);
+bool bStackIsFull(STACK *ptStack);
 
 /**
  *  Data on top of the stack without popping it.
@@ -71,13 +78,13 @@ bool bStackIsFull(stack *ptStack);
  *
  *  @return data on the top of stack
  */
-int32_t i32StackPeek(stack *ptStack);
+voi vStackPeek(STACK *ptStack, void *pvData);
 
 /**
  *  De-initialize the stack.
  *
  *  @param ptStack      pointer to the stack
  */
-void vStackExit(stack *ptStack);
+void vStackExit(STACK *ptStack);
 
 #endif //_STACK_H_
