@@ -1,37 +1,50 @@
 #include "queue.h"
 
+#ifndef LOG_ERROR_MSG
+    #define LOG_ERROR_MSG(fmt) printf("[%s:%d] " fmt, __FUNCTION__, __LINE__)
+#endif
+
+#ifndef LOG_ERROR_MSG_ARGS
+    #define LOG_ERROR_MSG_ARGS(fmt, ...) printf("[%s:%d] " fmt, __FUNCTION__, __LINE__, __VA_ARGS__)
+#endif
+
 // see header file for description
-void vQueueInit(queue *ptQueue, int32_t i32Size)
+void vQueueInit(QUEUE *ptQueue, int32_t i32Size)
 {
     // allocate the memory
-    ptQueue->pi32Data = (int32_t *)malloc(i32Size * sizeof(int32_t));
+    ptQueue->ptData = (QUEUE_ELEMENT *)malloc(i32Size * sizeof(QUEUE_ELEMENT));
+
     // set the size
-    ptQueue->i32MaxSize = i32Size;
+    ptQueue->i32QueueSize = i32Size;
+
     // set the front
     ptQueue->i32Front = -1;
+
     // set the rear
     ptQueue->i32Rear = -1;
 }
 
 // see header file for description
-void vQueueEnqueue(queue *ptQueue, int32_t i32Data)
+void vQueueEnqueue(QUEUE *ptQueue, QUEUE_ELEMENT tData)
 {
     int32_t i32Rear = ptQueue->i32Rear;
+
     // increment the rear
-    ptQueue->i32Rear = (ptQueue->i32Rear + 1) % ptQueue->i32MaxSize;
+    ptQueue->i32Rear = (ptQueue->i32Rear + 1) % ptQueue->i32QueueSize;
 
     // check the space available
     if (ptQueue->i32Rear == ptQueue->i32Front)
     {
         // queue is full
-        printf("Queue Overflow\n");
+        LOG_ERROR_MSG("Queue Overflow\n");
+
         // reset the rear
         ptQueue->i32Rear = i32Rear;
     }
     else
     {
         // put data on the queue
-        ptQueue->pi32Data[ptQueue->i32Rear] = i32Data;
+        ptQueue->ptData[ptQueue->i32Rear] = tData;
         
         // check and set the front
         if (ptQueue->i32Front == -1)
@@ -42,19 +55,19 @@ void vQueueEnqueue(queue *ptQueue, int32_t i32Data)
 }
 
 // see header file for description
-int32_t i32QueueDequeue(queue *ptQueue)
+QUEUE_ELEMENT tQueueDequeue(QUEUE *ptQueue)
 {
-    int32_t i32Data = 0;
+    QUEUE_ELEMENT tData = 0;
 
-    if (ptQueue->i32Rear == -1)
+    if (bQueueIsEmpty(ptQueue))
     {
         // queue is empty
-        printf("Queue Underflow\n");
+        LOG_ERROR_MSG("Queue Underflow\n");
     }
     else
     {
         // extract the data from the queue
-        i32Data = ptQueue->pi32Data[ptQueue->i32Front];
+        tData = ptQueue->ptData[ptQueue->i32Front];
 
         // set the front
         if (ptQueue->i32Front == ptQueue->i32Rear)
@@ -63,33 +76,36 @@ int32_t i32QueueDequeue(queue *ptQueue)
         }
         else
         {
-            ptQueue->i32Front = (ptQueue->i32Front + 1) % ptQueue->i32MaxSize;
+            ptQueue->i32Front = (ptQueue->i32Front + 1) % ptQueue->i32QueueSize;
         }
     }
-    return i32Data;
+    return tData;
 }
 
 // see header file for description
-bool bQueueIsEmpty(queue *ptQueue)
+bool bQueueIsEmpty(QUEUE *ptQueue)
 {
     return (ptQueue->i32Rear == -1);
 }
 
 // see header file for description
-bool bQueueIsFull(queue *ptQueue)
+bool bQueueIsFull(QUEUE *ptQueue)
 {
-    return (ptQueue->i32Front == (ptQueue->i32Rear + 1) % ptQueue->i32MaxSize);
+    return (ptQueue->i32Front == (ptQueue->i32Rear + 1) % ptQueue->i32QueueSize);
 }
 
 // see header file for description
-void vQueueExit(queue *ptQueue)
+void vQueueExit(QUEUE *ptQueue)
 {
     // release the memory
-    free(ptQueue->pi32Data);
+    free(ptQueue->ptData);
+
     // reset the size
-    ptQueue->i32MaxSize = 0;
+    ptQueue->i32QueueSize = 0;
+
     // reset the front
     ptQueue->i32Front = -1;
+
     // reset the rear
     ptQueue->i32Rear = -1;
 }
