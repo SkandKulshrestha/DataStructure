@@ -8,9 +8,7 @@
 
 /*  includes
  ******************************************************************************/
-#include <stdio.h>
 #include <stdint.h>
-#include <stdlib.h>
 #include <stdbool.h>
 
 
@@ -36,13 +34,30 @@ typedef enum
 /**
  **  Structure of the node
  **/
-typedef struct binaryTreeNode T_BINARY_TREE_NODE;
+typedef struct binaryTreeNode
+{
+    /// data of the node
+    int32_t                     i32Data;
+
+    /// pointer to parent node
+    struct binaryTreeNode       *ptParent;
+
+    /// pointer to left child node
+    struct binaryTreeNode       *ptLeftChild;
+
+    /// pointer to right child node
+    struct binaryTreeNode       *ptRightChild;
+} T_BINARY_TREE_NODE;
 
 
 /**
  **  Structure to hold the tree
  **/
-typedef struct binaryTree T_BINARY_TREE;
+typedef struct binaryTree
+{
+    /// root of the tree
+    T_BINARY_TREE_NODE      *ptRoot;
+} T_BINARY_TREE;
 
 
 /*  function prototypes
@@ -59,12 +74,14 @@ typedef struct binaryTree T_BINARY_TREE;
  **/
 void vBinaryTreeInitialize(T_BINARY_TREE *ptBinaryTree);
 
+
 /**
  ** Terminate the binary tree.
  **
  ** @param [in,out] ptBinaryTree        pointer to the binary tree
  **/
 void vBinaryTreeTerminate(T_BINARY_TREE *ptBinaryTree);
+
 
 /**
  ** Create the node for binary tree.
@@ -74,6 +91,7 @@ void vBinaryTreeTerminate(T_BINARY_TREE *ptBinaryTree);
  ** @return pointer to newly created node or NULL if not created
  **/
 T_BINARY_TREE_NODE *ptBinaryTreeCreateNewNode(int32_t i32Data);
+
 
 /**
  ** Delete the subtree of given node including node itself.
@@ -95,6 +113,7 @@ void vDeleteSubtree(T_BINARY_TREE_NODE *ptNode)
  **/
 void vSetRoot(T_BINARY_TREE *ptBinaryTree, T_BINARY_TREE_NODE *ptNewNode);
 
+
 /**
  ** Set left child of the given node.
  **
@@ -103,6 +122,7 @@ void vSetRoot(T_BINARY_TREE *ptBinaryTree, T_BINARY_TREE_NODE *ptNewNode);
  **/
 void vSetLeftChild(T_BINARY_TREE_NODE *ptParentNode, T_BINARY_TREE_NODE *ptChildNode);
 
+
 /**
  ** Set right child of the given node.
  **
@@ -110,6 +130,7 @@ void vSetLeftChild(T_BINARY_TREE_NODE *ptParentNode, T_BINARY_TREE_NODE *ptChild
  ** @param [in]     ptChildNode         pointer to the child node
  **/
 void vSetRightChild(T_BINARY_TREE_NODE *ptParentNode, T_BINARY_TREE_NODE *ptChildNode);
+
 
 /**
  ** Get root node of the binary tree.
@@ -120,6 +141,7 @@ void vSetRightChild(T_BINARY_TREE_NODE *ptParentNode, T_BINARY_TREE_NODE *ptChil
  **/
 T_BINARY_TREE_NODE *ptGetRoot(T_BINARY_TREE *ptBinaryTree);
 
+
 /**
  ** Get left child node of the given node.
  **
@@ -129,6 +151,7 @@ T_BINARY_TREE_NODE *ptGetRoot(T_BINARY_TREE *ptBinaryTree);
  **/
 T_BINARY_TREE_NODE *ptGetLeftChild(T_BINARY_TREE_NODE *ptParentNode);
 
+
 /**
  ** Get right child node of the given node.
  **
@@ -137,6 +160,7 @@ T_BINARY_TREE_NODE *ptGetLeftChild(T_BINARY_TREE_NODE *ptParentNode);
  ** @return right child node, if exist, otherwise NULL
  **/
 T_BINARY_TREE_NODE *ptGetRightChild(T_BINARY_TREE_NODE *ptParentNode);
+
 
 /**
  ** Get node data of the given node.
@@ -149,6 +173,7 @@ T_BINARY_TREE_NODE *ptGetRightChild(T_BINARY_TREE_NODE *ptParentNode);
  **/
 int32_t i32GetData(T_BINARY_TREE_NODE *ptNode);
 
+
 /**
  ** Check whether the root exist or not.
  **
@@ -158,6 +183,7 @@ int32_t i32GetData(T_BINARY_TREE_NODE *ptNode);
  **/
 bool bIsRootExist(T_BINARY_TREE *ptBinaryTree);
 
+
 /**
  ** Check whether the left child exist or not.
  **
@@ -166,6 +192,7 @@ bool bIsRootExist(T_BINARY_TREE *ptBinaryTree);
  ** @return true, if root exist, otherwise, false
  **/
 bool bIsLeftChildExist(T_BINARY_TREE_NODE *ptParentNode);
+
 
 /**
  ** Check whether the right child exist or not.

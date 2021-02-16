@@ -5,46 +5,37 @@
 
 /*  includes
  ******************************************************************************/
+#include <stdio.h>
+#include <stdlib.h>
+#include <assert.h>
 #include "binaryTree.h"
-
-
-/*  typedefs
- ******************************************************************************/
-
-// see header file for description
-typedef struct binaryTreeNode
-{
-    // data of the node
-    int32_t                     i32Data;
-
-    // pointer to parent node
-    struct binaryTreeNode       *ptParent;
-
-    // pointer to left child node
-    struct binaryTreeNode       *ptLeftChild;
-
-    // pointer to right child node
-    struct binaryTreeNode       *ptRightChild;
-} T_BINARY_TREE_NODE;
-
-
-// see header file for description
-typedef struct binaryTree
-{
-    // root of the tree
-    T_BINARY_TREE_NODE      *ptRoot;
-} T_BINARY_TREE;
 
 
 /*  function definitions
  ******************************************************************************/
 
+//------------------------------------------------------------------------------
+//                                                            Private Operations
+//------------------------------------------------------------------------------
 
+/**
+ ** Visit the binary tree node.
+ **
+ ** @param [in]     ptNode              pointer to the binary tree node
+ **/
 static void vVisitNode(T_BINARY_TREE_NODE *ptNode)
 {
+    assert(ptNode != NULL);
+
     printf("%d ", ptNode->i32Data);
 }
 
+
+/**
+ ** Preorder traversal of a node.
+ **
+ ** @param [in]     ptNode              pointer to the binary tree node
+ **/
 static void vPreorderTraversal(T_BINARY_TREE_NODE *ptNode)
 {
     // VLR: Visit, Left, Right
@@ -56,6 +47,12 @@ static void vPreorderTraversal(T_BINARY_TREE_NODE *ptNode)
     }
 }
 
+
+/**
+ ** Inorder traversal of a node.
+ **
+ ** @param [in]     ptNode              pointer to the binary tree node
+ **/
 static void vInorderTraversal(T_BINARY_TREE_NODE *ptNode)
 {
     // LVR: Left, Visit, Right
@@ -67,6 +64,12 @@ static void vInorderTraversal(T_BINARY_TREE_NODE *ptNode)
     }
 }
 
+
+/**
+ ** Postorder traversal of a node.
+ **
+ ** @param [in]     ptNode              pointer to the binary tree node
+ **/
 static void vPostorderTraversal(T_BINARY_TREE_NODE *ptNode)
 {
     // LRV: Left, Right, Visit
@@ -78,28 +81,47 @@ static void vPostorderTraversal(T_BINARY_TREE_NODE *ptNode)
     }
 }
 
+
+/**
+ ** Delete given binary tree node.
+ **
+ ** @param [in]     ptNode              pointer to the binary tree node
+ **/
 static void vBinaryTreeDeleteNode(T_BINARY_TREE_NODE *ptNode)
 {
+    assert(ptNode != NULL);
+
     printf("Deleting %d\n", ptNode->i32Data);
     free(ptNode);
 }
 
+
+//------------------------------------------------------------------------------
+//                                                      Constructor & Destructor
+//------------------------------------------------------------------------------
+
 // see header file for description
 void vBinaryTreeInitialize(T_BINARY_TREE *ptBinaryTree)
 {
+    assert(ptBinaryTree != NULL);
+
     // initialize root
     ptBinaryTree->ptRoot = NULL;
 }
 
+
 // see header file for description
 void vBinaryTreeTerminate(T_BINARY_TREE *ptBinaryTree)
 {
+    assert(ptBinaryTree != NULL);
+
     // delete tree
     vDeleteSubtree(ptBinaryTree->ptRoot);
 
     // re-initialize root
     ptBinaryTree->ptRoot = NULL;
 }
+
 
 // see header file for description
 T_BINARY_TREE_NODE *ptBinaryTreeCreateNewNode(int32_t i32Data)
@@ -128,6 +150,7 @@ T_BINARY_TREE_NODE *ptBinaryTreeCreateNewNode(int32_t i32Data)
     return ptNewNode;
 }
 
+
 // see header file for description
 void vDeleteSubtree(T_BINARY_TREE_NODE *ptNode)
 {
@@ -147,91 +170,120 @@ void vDeleteSubtree(T_BINARY_TREE_NODE *ptNode)
 }
 
 
+//------------------------------------------------------------------------------
+//                                                               Setter & Getter
+//------------------------------------------------------------------------------
+
 // see header file for description
 void vSetRoot(T_BINARY_TREE *ptBinaryTree, T_BINARY_TREE_NODE *ptNewNode)
 {
+    assert(ptBinaryTree != NULL);
+
     ptBinaryTree->ptRoot = ptNewNode;
 }
+
 
 // see header file for description
 void vSetLeftChild(T_BINARY_TREE_NODE *ptParentNode, T_BINARY_TREE_NODE *ptChildNode)
 {
+    assert(ptParentNode != NULL && ptChildNode != NULL);
+
     ptChildNode->ptParent = ptParentNode;
     ptParentNode->ptLeftChild = ptChildNode;
 }
 
+
 // see header file for description
 void vSetRightChild(T_BINARY_TREE_NODE *ptParentNode, T_BINARY_TREE_NODE *ptChildNode)
 {
+    assert(ptParentNode != NULL && ptChildNode != NULL);
+
     ptChildNode->ptParent = ptParentNode;
     ptParentNode->ptRightChild = ptChildNode;
 }
 
+
 // see header file for description
 T_BINARY_TREE_NODE *ptGetRoot(T_BINARY_TREE *ptBinaryTree)
 {
+    assert(ptBinaryTree != NULL);
+
     return ptBinaryTree->ptRoot;
 }
+
 
 // see header file for description
 T_BINARY_TREE_NODE *ptGetLeftChild(T_BINARY_TREE_NODE *ptParentNode)
 {
+    assert(ptParentNode != NULL);
+
     return ptParentNode->ptLeftChild;
 }
+
 
 // see header file for description
 T_BINARY_TREE_NODE *ptGetRightChild(T_BINARY_TREE_NODE *ptParentNode)
 {
+    assert(ptParentNode != NULL);
+
     return ptParentNode->ptRightChild;
 }
+
 
 // see header file for description
 int32_t i32GetData(T_BINARY_TREE_NODE *ptNode)
 {
+    assert(ptNode != NULL);
+
     return ptNode->i32Data;
 }
+
 
 // see header file for description
 bool bIsRootExist(T_BINARY_TREE *ptBinaryTree)
 {
+    assert(ptBinaryTree != NULL);
+
     return (ptBinaryTree->ptRoot != NULL);
 }
+
 
 // see header file for description
 bool bIsLeftChildExist(T_BINARY_TREE_NODE *ptParentNode)
 {
+    assert(ptParentNode != NULL);
+
     return (ptParentNode->ptLeftChild != NULL);
 }
+
 
 // see header file for description
 bool bIsRightChildExist(T_BINARY_TREE_NODE *ptParentNode)
 {
+    assert(ptParentNode != NULL);
+
     return (ptParentNode->ptRightChild != NULL);
 }
+
 
 // see header file for description
 bool bIsLeafNode(T_BINARY_TREE_NODE *ptNode)
 {
+    assert(ptNode != NULL);
+
     return (ptNode->ptLeftChild == NULL && ptNode->ptRightChild == NULL);
 }
 
-// see header file for description
-void vRemoveLeafNode(T_BINARY_TREE_NODE *ptNode)
-{
-    vBinaryTreeDeleteNode(ptNode);
-}
 
-void vRemoveLeftChild(T_BINARY_TREE_NODE *ptParentNode, T_BINARY_TREE_NODE *ptChildNode)
-{
-}
-
-void vRemoveRightChild(T_BINARY_TREE_NODE *ptParentNode, T_BINARY_TREE_NODE *ptChildNode)
-{
-}
+//------------------------------------------------------------------------------
+//                                                                    Operations
+//------------------------------------------------------------------------------
 
 // see header file for description
 void vBinaryTreeTraverse(T_BINARY_TREE *ptBinaryTree, T_TREE_TRAVERSAL_ORDER tOrder)
 {
+    assert(ptBinaryTree != NULL);
+
     switch (tOrder)
     {
         case PREORDER_TRAVERSAL:
