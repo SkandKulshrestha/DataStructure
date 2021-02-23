@@ -32,31 +32,31 @@ typedef enum
 
 
 /**
- **  Structure of the node
+ ** Structure of the node
  **/
 typedef struct binaryTreeNode
 {
     /// data of the node
-    int32_t                     i32Data;
+    int32_t                             i32Data;
 
     /// pointer to parent node
-    struct binaryTreeNode       *ptParent;
+    struct binaryTreeNode               *ptParent;
 
     /// pointer to left child node
-    struct binaryTreeNode       *ptLeftChild;
+    struct binaryTreeNode               *ptLeftChild;
 
     /// pointer to right child node
-    struct binaryTreeNode       *ptRightChild;
+    struct binaryTreeNode               *ptRightChild;
 } T_BINARY_TREE_NODE;
 
 
 /**
- **  Structure to hold the tree
+ ** Structure to hold the tree
  **/
 typedef struct binaryTree
 {
     /// root of the tree
-    T_BINARY_TREE_NODE      *ptRoot;
+    T_BINARY_TREE_NODE                  *ptRoot;
 } T_BINARY_TREE;
 
 
@@ -72,7 +72,7 @@ typedef struct binaryTree
  **
  ** @param [in,out] ptBinaryTree        pointer to the binary tree
  **/
-void vBinaryTreeInitialize(T_BINARY_TREE *ptBinaryTree);
+void vBTInitialize(T_BINARY_TREE *ptBinaryTree);
 
 
 /**
@@ -80,7 +80,7 @@ void vBinaryTreeInitialize(T_BINARY_TREE *ptBinaryTree);
  **
  ** @param [in,out] ptBinaryTree        pointer to the binary tree
  **/
-void vBinaryTreeTerminate(T_BINARY_TREE *ptBinaryTree);
+void vBTTerminate(T_BINARY_TREE *ptBinaryTree);
 
 
 /**
@@ -90,7 +90,7 @@ void vBinaryTreeTerminate(T_BINARY_TREE *ptBinaryTree);
  **
  ** @return pointer to newly created node or NULL if not created
  **/
-T_BINARY_TREE_NODE *ptBinaryTreeCreateNewNode(int32_t i32Data);
+T_BINARY_TREE_NODE *ptBTCreateNewNode(int32_t i32Data);
 
 
 /**
@@ -98,7 +98,17 @@ T_BINARY_TREE_NODE *ptBinaryTreeCreateNewNode(int32_t i32Data);
  **
  ** @param [in]     ptNode              pointer to the node
  **/
-void vDeleteSubtree(T_BINARY_TREE_NODE *ptNode)
+void vBTDeleteSubtree(T_BINARY_TREE_NODE *ptNode);
+
+
+/**
+ ** Delete given binary tree node.
+ **
+ ** @pre            given node must be leaf node
+ **
+ ** @param [in]     ptNode              pointer to the binary tree node
+ **/
+void vBTDeleteNode(T_BINARY_TREE_NODE *ptNode);
 
 
 //------------------------------------------------------------------------------
@@ -111,7 +121,7 @@ void vDeleteSubtree(T_BINARY_TREE_NODE *ptNode)
  ** @param [in,out] ptBinaryTree        pointer to the binary tree
  ** @param [in]     ptNewNode           pointer to the node
  **/
-void vSetRoot(T_BINARY_TREE *ptBinaryTree, T_BINARY_TREE_NODE *ptNewNode);
+void vBTSetRoot(T_BINARY_TREE *ptBinaryTree, T_BINARY_TREE_NODE *ptNewNode);
 
 
 /**
@@ -120,7 +130,7 @@ void vSetRoot(T_BINARY_TREE *ptBinaryTree, T_BINARY_TREE_NODE *ptNewNode);
  ** @param [in,out] ptParentNode        pointer to the parent node
  ** @param [in]     ptChildNode         pointer to the child node
  **/
-void vSetLeftChild(T_BINARY_TREE_NODE *ptParentNode, T_BINARY_TREE_NODE *ptChildNode);
+void vBTSetLeftChild(T_BINARY_TREE_NODE *ptParentNode, T_BINARY_TREE_NODE *ptChildNode);
 
 
 /**
@@ -129,7 +139,9 @@ void vSetLeftChild(T_BINARY_TREE_NODE *ptParentNode, T_BINARY_TREE_NODE *ptChild
  ** @param [in,out] ptParentNode        pointer to the parent node
  ** @param [in]     ptChildNode         pointer to the child node
  **/
-void vSetRightChild(T_BINARY_TREE_NODE *ptParentNode, T_BINARY_TREE_NODE *ptChildNode);
+void vBTSetRightChild(T_BINARY_TREE_NODE *ptParentNode, T_BINARY_TREE_NODE *ptChildNode);
+
+void vBTSetData(T_BINARY_TREE_NODE *ptNode, int32_t i32Data);
 
 
 /**
@@ -139,7 +151,7 @@ void vSetRightChild(T_BINARY_TREE_NODE *ptParentNode, T_BINARY_TREE_NODE *ptChil
  **
  ** @return root node, if exist, otherwise NULL
  **/
-T_BINARY_TREE_NODE *ptGetRoot(T_BINARY_TREE *ptBinaryTree);
+T_BINARY_TREE_NODE *ptBTGetRoot(T_BINARY_TREE *ptBinaryTree);
 
 
 /**
@@ -149,7 +161,7 @@ T_BINARY_TREE_NODE *ptGetRoot(T_BINARY_TREE *ptBinaryTree);
  **
  ** @return left child node, if exist, otherwise NULL
  **/
-T_BINARY_TREE_NODE *ptGetLeftChild(T_BINARY_TREE_NODE *ptParentNode);
+T_BINARY_TREE_NODE *ptBTGetLeftChild(T_BINARY_TREE_NODE *ptParentNode);
 
 
 /**
@@ -159,7 +171,7 @@ T_BINARY_TREE_NODE *ptGetLeftChild(T_BINARY_TREE_NODE *ptParentNode);
  **
  ** @return right child node, if exist, otherwise NULL
  **/
-T_BINARY_TREE_NODE *ptGetRightChild(T_BINARY_TREE_NODE *ptParentNode);
+T_BINARY_TREE_NODE *ptBTGetRightChild(T_BINARY_TREE_NODE *ptParentNode);
 
 
 /**
@@ -171,7 +183,7 @@ T_BINARY_TREE_NODE *ptGetRightChild(T_BINARY_TREE_NODE *ptParentNode);
  **
  ** @return node data
  **/
-int32_t i32GetData(T_BINARY_TREE_NODE *ptNode);
+int32_t i32BTGetData(T_BINARY_TREE_NODE *ptNode);
 
 
 /**
@@ -181,7 +193,7 @@ int32_t i32GetData(T_BINARY_TREE_NODE *ptNode);
  **
  ** @return true, if root exist, otherwise, false
  **/
-bool bIsRootExist(T_BINARY_TREE *ptBinaryTree);
+bool bBTIsRootExist(T_BINARY_TREE *ptBinaryTree);
 
 
 /**
@@ -191,7 +203,7 @@ bool bIsRootExist(T_BINARY_TREE *ptBinaryTree);
  **
  ** @return true, if root exist, otherwise, false
  **/
-bool bIsLeftChildExist(T_BINARY_TREE_NODE *ptParentNode);
+bool bBTHasLeftChild(T_BINARY_TREE_NODE *ptParentNode);
 
 
 /**
@@ -201,7 +213,7 @@ bool bIsLeftChildExist(T_BINARY_TREE_NODE *ptParentNode);
  **
  ** @return true, if root exist, otherwise, false
  **/
-bool bIsRightChildExist(T_BINARY_TREE_NODE *ptParentNode);
+bool bBTHasRightChild(T_BINARY_TREE_NODE *ptParentNode);
 
 
 //------------------------------------------------------------------------------
@@ -214,6 +226,6 @@ bool bIsRightChildExist(T_BINARY_TREE_NODE *ptParentNode);
  ** @param [in]     ptBinaryTree        pointer to the binary tree
  ** @param [in]     tOrder              traversal order
  **/
-void vBinaryTreeTraverse(T_BINARY_TREE *ptBinaryTree, T_TREE_TRAVERSAL_ORDER tOrder);
+void vBTTraverse(T_BINARY_TREE *ptBinaryTree, T_TREE_TRAVERSAL_ORDER tOrder);
 
 #endif // _BINARY_TREE_H_

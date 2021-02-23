@@ -82,26 +82,13 @@ static void vPostorderTraversal(T_BINARY_TREE_NODE *ptNode)
 }
 
 
-/**
- ** Delete given binary tree node.
- **
- ** @param [in]     ptNode              pointer to the binary tree node
- **/
-static void vBinaryTreeDeleteNode(T_BINARY_TREE_NODE *ptNode)
-{
-    assert(ptNode != NULL);
-
-    printf("Deleting %d\n", ptNode->i32Data);
-    free(ptNode);
-}
-
 
 //------------------------------------------------------------------------------
 //                                                      Constructor & Destructor
 //------------------------------------------------------------------------------
 
 // see header file for description
-void vBinaryTreeInitialize(T_BINARY_TREE *ptBinaryTree)
+void vBTInitialize(T_BINARY_TREE *ptBinaryTree)
 {
     assert(ptBinaryTree != NULL);
 
@@ -111,7 +98,7 @@ void vBinaryTreeInitialize(T_BINARY_TREE *ptBinaryTree)
 
 
 // see header file for description
-void vBinaryTreeTerminate(T_BINARY_TREE *ptBinaryTree)
+void vBTTerminate(T_BINARY_TREE *ptBinaryTree)
 {
     assert(ptBinaryTree != NULL);
 
@@ -124,7 +111,7 @@ void vBinaryTreeTerminate(T_BINARY_TREE *ptBinaryTree)
 
 
 // see header file for description
-T_BINARY_TREE_NODE *ptBinaryTreeCreateNewNode(int32_t i32Data)
+T_BINARY_TREE_NODE *ptBTCreateNewNode(int32_t i32Data)
 {
     T_BINARY_TREE_NODE *ptNewNode;
 
@@ -152,21 +139,31 @@ T_BINARY_TREE_NODE *ptBinaryTreeCreateNewNode(int32_t i32Data)
 
 
 // see header file for description
-void vDeleteSubtree(T_BINARY_TREE_NODE *ptNode)
+void vBTDeleteSubtree(T_BINARY_TREE_NODE *ptNode)
 {
     if (ptNode != NULL)
     {
         // delete left subtree
-        vDeleteSubtree(ptNode->ptLeftChild);
+        vBTDeleteSubtree(ptNode->ptLeftChild);
         ptNode->ptLeftChild = NULL;
 
         // delete right subtree
-        vDeleteSubtree(ptNode->ptRightChild);
+        vBTDeleteSubtree(ptNode->ptRightChild);
         ptNode->ptRightChild = NULL;
 
         // delete current node
-        vBinaryTreeDeleteNode(ptNode);
+        vBTDeleteNode(ptNode);
     }
+}
+
+
+// see header file for description
+void vBTDeleteNode(T_BINARY_TREE_NODE *ptNode)
+{
+    assert(ptNode != NULL);
+
+    printf("Deleting %d\n", ptNode->i32Data);
+    free(ptNode);
 }
 
 
@@ -175,7 +172,7 @@ void vDeleteSubtree(T_BINARY_TREE_NODE *ptNode)
 //------------------------------------------------------------------------------
 
 // see header file for description
-void vSetRoot(T_BINARY_TREE *ptBinaryTree, T_BINARY_TREE_NODE *ptNewNode)
+void vBTSetRoot(T_BINARY_TREE *ptBinaryTree, T_BINARY_TREE_NODE *ptNewNode)
 {
     assert(ptBinaryTree != NULL);
 
@@ -184,7 +181,7 @@ void vSetRoot(T_BINARY_TREE *ptBinaryTree, T_BINARY_TREE_NODE *ptNewNode)
 
 
 // see header file for description
-void vSetLeftChild(T_BINARY_TREE_NODE *ptParentNode, T_BINARY_TREE_NODE *ptChildNode)
+void vBTSetLeftChild(T_BINARY_TREE_NODE *ptParentNode, T_BINARY_TREE_NODE *ptChildNode)
 {
     assert(ptParentNode != NULL && ptChildNode != NULL);
 
@@ -194,7 +191,7 @@ void vSetLeftChild(T_BINARY_TREE_NODE *ptParentNode, T_BINARY_TREE_NODE *ptChild
 
 
 // see header file for description
-void vSetRightChild(T_BINARY_TREE_NODE *ptParentNode, T_BINARY_TREE_NODE *ptChildNode)
+void vBTSetRightChild(T_BINARY_TREE_NODE *ptParentNode, T_BINARY_TREE_NODE *ptChildNode)
 {
     assert(ptParentNode != NULL && ptChildNode != NULL);
 
@@ -204,7 +201,16 @@ void vSetRightChild(T_BINARY_TREE_NODE *ptParentNode, T_BINARY_TREE_NODE *ptChil
 
 
 // see header file for description
-T_BINARY_TREE_NODE *ptGetRoot(T_BINARY_TREE *ptBinaryTree)
+void vBTSetData(T_BINARY_TREE_NODE *ptNode, int32_t i32Data)
+{
+    assert(ptNode != NULL);
+
+    ptNode->i32Data = i32Data;
+}
+
+
+// see header file for description
+T_BINARY_TREE_NODE *ptBTGetRoot(T_BINARY_TREE *ptBinaryTree)
 {
     assert(ptBinaryTree != NULL);
 
@@ -213,7 +219,7 @@ T_BINARY_TREE_NODE *ptGetRoot(T_BINARY_TREE *ptBinaryTree)
 
 
 // see header file for description
-T_BINARY_TREE_NODE *ptGetLeftChild(T_BINARY_TREE_NODE *ptParentNode)
+T_BINARY_TREE_NODE *ptBTGetLeftChild(T_BINARY_TREE_NODE *ptParentNode)
 {
     assert(ptParentNode != NULL);
 
@@ -222,7 +228,7 @@ T_BINARY_TREE_NODE *ptGetLeftChild(T_BINARY_TREE_NODE *ptParentNode)
 
 
 // see header file for description
-T_BINARY_TREE_NODE *ptGetRightChild(T_BINARY_TREE_NODE *ptParentNode)
+T_BINARY_TREE_NODE *ptBTGetRightChild(T_BINARY_TREE_NODE *ptParentNode)
 {
     assert(ptParentNode != NULL);
 
@@ -231,7 +237,7 @@ T_BINARY_TREE_NODE *ptGetRightChild(T_BINARY_TREE_NODE *ptParentNode)
 
 
 // see header file for description
-int32_t i32GetData(T_BINARY_TREE_NODE *ptNode)
+int32_t i32BTGetData(T_BINARY_TREE_NODE *ptNode)
 {
     assert(ptNode != NULL);
 
@@ -240,7 +246,7 @@ int32_t i32GetData(T_BINARY_TREE_NODE *ptNode)
 
 
 // see header file for description
-bool bIsRootExist(T_BINARY_TREE *ptBinaryTree)
+bool bBTIsRootExist(T_BINARY_TREE *ptBinaryTree)
 {
     assert(ptBinaryTree != NULL);
 
@@ -249,7 +255,7 @@ bool bIsRootExist(T_BINARY_TREE *ptBinaryTree)
 
 
 // see header file for description
-bool bIsLeftChildExist(T_BINARY_TREE_NODE *ptParentNode)
+bool bBTHasLeftChild(T_BINARY_TREE_NODE *ptParentNode)
 {
     assert(ptParentNode != NULL);
 
@@ -258,7 +264,7 @@ bool bIsLeftChildExist(T_BINARY_TREE_NODE *ptParentNode)
 
 
 // see header file for description
-bool bIsRightChildExist(T_BINARY_TREE_NODE *ptParentNode)
+bool bBTHasRightChild(T_BINARY_TREE_NODE *ptParentNode)
 {
     assert(ptParentNode != NULL);
 
@@ -267,7 +273,7 @@ bool bIsRightChildExist(T_BINARY_TREE_NODE *ptParentNode)
 
 
 // see header file for description
-bool bIsLeafNode(T_BINARY_TREE_NODE *ptNode)
+bool bBTIsLeafNode(T_BINARY_TREE_NODE *ptNode)
 {
     assert(ptNode != NULL);
 
@@ -280,7 +286,7 @@ bool bIsLeafNode(T_BINARY_TREE_NODE *ptNode)
 //------------------------------------------------------------------------------
 
 // see header file for description
-void vBinaryTreeTraverse(T_BINARY_TREE *ptBinaryTree, T_TREE_TRAVERSAL_ORDER tOrder)
+void vBTTraverse(T_BINARY_TREE *ptBinaryTree, T_TREE_TRAVERSAL_ORDER tOrder)
 {
     assert(ptBinaryTree != NULL);
 

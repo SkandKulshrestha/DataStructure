@@ -3,8 +3,8 @@
  * @Version v0.1
  */
 
-#ifndef _BINARY_SEARCH_TREE_H_
-#define _BINARY_SEARCH_TREE_H_
+#ifndef _AVL_TREE_H_
+#define _AVL_TREE_H_
 
 /*  includes
  ******************************************************************************/
@@ -16,6 +16,22 @@
  ******************************************************************************/
 
 /**
+ ** Balance Factor := Height(RightSubtree(X)) - Height(LeftSubtree(X))
+ **/
+typedef enum
+{
+    /// Balance factor -1
+    BALANCE_FACTOR_MINUS_ONE = -1,
+
+    /// Balance factor 0
+    BALANCE_FACTOR_ZERO,
+
+    /// Balance factor +1
+    BALANCE_FACTOR_PLUS_ONE
+} T_NODE_BALANCE_FACTOR;
+
+
+/**
  ** Structure of the node (Same as binary tree)
  **
  ** {
@@ -25,18 +41,18 @@
  **     T_BINARY_TREE_NODE*     ptRightChild
  ** }
  **/
-typedef T_BINARY_TREE_NODE T_BINARY_SEARCH_TREE_NODE;
+typedef T_BINARY_TREE_NODE T_AVL_TREE_NODE;
 
 
 /**
- ** Structure to hold the binary search tree (Same as binary tree)
+ ** Structure to hold the AVL tree (Same as binary tree)
  **
  ** {
  **     T_BINARY_TREE_NODE      *ptRoot;
  ** }
  **
  **/
-typedef T_BINARY_TREE T_BINARY_SEARCH_TREE;
+typedef T_BINARY_TREE T_AVL_TREE;
 
 
 /*  function prototypes
@@ -47,19 +63,19 @@ typedef T_BINARY_TREE T_BINARY_SEARCH_TREE;
 //------------------------------------------------------------------------------
 
 /**
- ** Initialize the binary tree.
+ ** Initialize the AVL tree.
  **
- ** @param [in,out] ptBST               pointer to the binary search tree
+ ** @param [in,out] ptAVLTree           pointer to the AVL tree
  **/
-void vBSTInitialize(T_BINARY_SEARCH_TREE *ptBST);
+void vAVLTreeInitialize(T_AVL_TREE *ptAVLTree);
 
 
 /**
- ** Terminate the binary tree.
+ ** Terminate the AVL tree.
  **
- ** @param [in,out] ptBST               pointer to the binary search tree
+ ** @param [in,out] ptAVLTree           pointer to the AVL tree
  **/
-void vBSTTerminate(T_BINARY_SEARCH_TREE *ptBST);
+void vAVLTreeTerminate(T_AVL_TREE *ptAVLTree);
 
 
 
@@ -68,40 +84,40 @@ void vBSTTerminate(T_BINARY_SEARCH_TREE *ptBST);
 //------------------------------------------------------------------------------
 
 /**
- ** Traverse the binary search tree.
+ ** Traverse the AVL tree.
  **
- ** @param [in]     ptBST               pointer to the binary search tree
+ ** @param [in]     ptAVLTree           pointer to the AVL tree
  ** @param [in]     tOrder              traversal order
  **/
-void vBSTTraverse(T_BINARY_SEARCH_TREE *ptBST, T_TRAVERSAL_ORDER tOrder);
+void vAVLTreeTraverse(T_AVL_TREE *ptAVLTree, T_TRAVERSAL_ORDER tOrder);
 
 
 /**
- ** Insert the data into the binary search tree.
+ ** Insert the data into the AVL tree.
  **
- ** @param [in]     ptBST               pointer to the binary search tree
+ ** @param [in]     ptAVLTree           pointer to the AVL tree
  ** @param [in]     i32Data             data to be inserted
  **/
-void vBSTInsert(T_BINARY_SEARCH_TREE *ptBST, int32_t i32Data);
+void vAVLTreeInsert(T_AVL_TREE *ptAVLTree, int32_t i32Data);
 
 
 /**
- ** Search the data in the binary search tree.
+ ** Search the data in the AVL tree.
  **
- ** @param [in]     ptBST               pointer to the binary search tree
+ ** @param [in]     ptAVLTree           pointer to the AVL tree
  ** @param [in]     i32Data             data to be searched
  **
  ** @return         node, if found, otherwise NULL
  **/
-T_BINARY_SEARCH_TREE_NODE *ptBSTSearch(T_BINARY_SEARCH_TREE *ptBST, int32_t i32Data);
+T_AVL_TREE_NODE *ptAVLTreeSearch(T_AVL_TREE *ptAVLTree, int32_t i32Data);
 
 
 /**
- ** Delete the data (first occurrence) from the binary search tree.
+ ** Delete the data (first occurrence) from the AVL tree.
  **
- ** @param [in]     ptBST               pointer to the binary search tree
+ ** @param [in]     ptAVLTree           pointer to the AVL tree
  ** @param [in]     i32Data             data to be deleted
  **/
-void vBSTDelete(T_BINARY_SEARCH_TREE *ptBST, int32_t i32Data);
+void vAVLTreeDelete(T_AVL_TREE *ptAVLTree, int32_t i32Data);
 
-#endif // _BINARY_SEARCH_TREE_H_
+#endif // _AVL_TREE_H_
