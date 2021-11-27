@@ -173,13 +173,64 @@ void vLinkedListRemoveAfterNode(node *ptNode)
 // see header file for description
 void vLinkedListRemoveAtIndex(list *ptList, int32_t i32Index)
 {
-    // [TODO] Yet to be implemented
+    int32_t i32Counter = 0;
+    node *ptPreviousNode = NULL;
+    node *ptNode = ptList->ptHead;
+
+    // check the empty list
+    if (ptNode == NULL)
+    {
+        return;
+    }
+
+    if (i32Index == 0)
+    {
+        // remove node from the beginning
+        vLinkedListRemoveFromBeginning(ptList);
+    }
+    else
+    {
+        // find the node
+        while (i32Counter < i32Index && ptNode != NULL)
+        {
+            i32Counter++;
+            ptPreviousNode = ptNode;
+            ptNode = ptNode->ptNext;
+        }
+
+        // remove after the node
+        vLinkedListRemoveAfterNode(ptPreviousNode);
+    }
 }
 
 // see header file for description
 void vLinkedListRemoveFromEnd(list *ptList)
 {
-    // [TODO] Yet to be implemented
+    node *ptPreviousNode = NULL;
+    node *ptNode = ptList->ptHead;
+
+    // check the empty list
+    if (ptList->ptTail == NULL)
+    {
+        return;
+    }
+    if (ptList->ptHead == ptList->ptTail)
+    {
+        // remove node from the beginning
+        vLinkedListRemoveFromBeginning(ptList);
+    }
+    else
+    {
+        // reach the end
+        while (ptNode->ptNext != NULL)
+        {
+            ptPreviousNode = ptNode;
+            ptNode = ptNode->ptNext;
+        }
+
+        // remove tail node
+        vLinkedListRemoveAfterNode(ptPreviousNode);
+    }
 }
 
 // see header file for description
